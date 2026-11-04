@@ -5,11 +5,16 @@ type ChatMessage = {
   id: string;
   m: string;
 };
-
+type CreateRoomResponseModel = {
+  name: string;
+  roomId: string;
+  success: boolean;
+};
 function App() {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [connected, setConnected] = useState(socket.connected);
+  const [roomValue, setRoomValue] = useState("");
   useEffect(() => {
     const onConnect = () => setConnected(true);
     const onDisconnect = () => setConnected(false);
@@ -29,13 +34,15 @@ function App() {
   const handleSendChat = () => {
     const trimmed = message.trim();
     if (!trimmed || !connected) return;
-    socket.emit("send-message", trimmed);
+    socket.emit("send-message", roomValue, trimmed);
     setMessage("");
   };
 
   const handleCreateRoom = (roomName: string) => {
-    socket.emit("create-room", roomName, (response) => {
+    socket.emit("create-room", roomName, (response: CreateRoomResponseModel) => {
       if (response.success) {
+        setRoomValue(response.roomId);
+        console.log(response);
         console.log("Server generated Room ID:", response.roomId);
       }
     });
@@ -44,6 +51,22 @@ function App() {
   const handleToggleConnection = () => {
     if (connected) socket.disconnect();
     else socket.connect();
+  };
+
+  const handleJoinRoom = () => {
+    socket.emit(
+      "join-room",
+      roomValue,
+      (response: { success: boolean; roomId: string; error: string }) => {
+        if (response.success) {
+          setRoomValue(response.roomId);
+          console.log(response);
+          setMessages([]);
+        } else {
+          alert(response.error);
+        }
+      },
+    );
   };
 
   return (
@@ -67,6 +90,9 @@ function App() {
         </div>
       ))}
       <button onClick={() => handleCreateRoom("Roluna")}>Create room</button>
+      <p>Room: {roomValue}</p>
+      <input value={roomValue} onChange={(e) => setRoomValue(e.target.value)} />
+      <button onClick={handleJoinRoom}>Join room</button>
     </div>
   );
 }
