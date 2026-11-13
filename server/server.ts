@@ -1,5 +1,7 @@
 import { createServer } from "node:http";
 import { Server } from "socket.io";
+// import { Cards, cards } from "./cards";
+import { v4 as uuidv4 } from "uuid";
 const httpServer = createServer();
 
 const io = new Server(httpServer, {
@@ -8,37 +10,80 @@ const io = new Server(httpServer, {
   },
 });
 
-type RoomModel = {
-  [roomId: string]: string;
+type Card = {
+  id: string;
+  value: string;
+  type: string;
 };
 
-const rooms: RoomModel = {};
+type Player = {
+  id: string;
+  name: string;
+  card: Card[];
+};
+
+type Room = {
+  name: string;
+  players: Player[];
+  maxPlayers: number;
+  status: "waiting" | "playing";
+};
+
+const room = new Map<string, Room>();
 
 io.on("connection", (socket) => {
-  socket.on("create-room", (roomName, callback) => {
-    const roomId = new Date().getUTCMilliseconds().toString().slice(0, 6).padStart(3, "0");
-    rooms[roomId] = roomName;
-    socket.join(roomId);
+  socket.on("create-lobby", (username, callBack) => {
+    const roomID = uuidv4().slice(0, 6).toUpperCase();
 
-    callback({ success: true, roomId: roomId, name: roomName });
+    const player: Player = {
+      id: socket.id,
+      name: username,
+      card: [],
+    };
+
+    const newRoom: Room = {
+      name: username,
+      players: [player],
+      maxPlayers: 5,
+      status: "waiting",
+    };
+
+    room.set(roomID, newRoom);
+
+    socket.join(roomID);
+
+    callBack({
+      id: roomID,
+      room: newRoom,
+      success: true,
+    });
+    console.log(room);
   });
-  socket.on("join-room", (roomId, callback) => {
-    if (!rooms[roomId]) {
-      callback({ success: false, error: "Room not found" });
-      return;
+
+  socket.on("join-room", (data: { id: string; name: string }, callBack) => {
+    const targetRoom = room.get(data.id);
+
+    if (!targetRoom) {
+      return callBack({ success: false, error: "Room not found" });
     }
 
-    socket.join(roomId);
+    const newPlayer: Player = {
+      id: socket.id,
+      name: data.name,
+      card: [],
+    };
 
-    socket.to(roomId).emit("user-joined", socket.id);
+    targetRoom.players.push(newPlayer);
 
-    callback({ success: true, roomId, name: rooms[roomId] });
+    socket.join(data.id);
+
+    io.to(data.id).emit("room-updated", targetRoom);
+    socket.to(data.id).emit("notification", `${data.name} joined the room!`);
+
+    callBack({ success: true, room: targetRoom });
   });
 
-  socket.on("send-message", (roomId, m) => {
-    console.log(m);
-    io.to(roomId).emit("receive-msg", { id: socket.id, m });
-  });
+  // socket.on("start-game", (id, callBack) => {});
 });
 
 httpServer.listen(3001, () => {
