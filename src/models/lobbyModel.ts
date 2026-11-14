@@ -7,7 +7,7 @@ export type RoomModel = {
   players: PublicPlayer[];
   maxPlayers: number;
   status: "waiting" | "playing";
-  deck: Card[];
+  deck: number;
   discardPile: Card[];
   currentPlayerIndex: number;
   turn: number;

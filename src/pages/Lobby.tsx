@@ -58,7 +58,7 @@ function Lobby() {
           {players.map((p, i) => {
             return (
               <div
-                key={p.id}
+                key={`${p.id}-${i}`}
                 className={`h-12.5 flex justify-between bg-white border-2 p-3 rounded-panel gap-2 items-center ${
                   p.id === lobby.room.hostId
                     ? "border-(--bg-color)"

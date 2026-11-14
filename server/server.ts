@@ -2,7 +2,7 @@ import { createServer } from "node:http";
 import { Server } from "socket.io";
 // import { Cards, cards } from "./cards";
 import { gameManager } from "./game/gameManager";
-import { Room } from "./types/lobbyModel";
+import { PrivateRoom } from "./types/lobbyModel";
 import { lobbyManager } from "./lobby/lobbyManager";
 const httpServer = createServer();
 
@@ -14,7 +14,7 @@ export const io = new Server(httpServer, {
   pingTimeout: 20000,
 });
 
-export const room = new Map<string, Room>();
+export const room = new Map<string, PrivateRoom>();
 
 io.on("connection", (socket) => {
   gameManager(io, socket);

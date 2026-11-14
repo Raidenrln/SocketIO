@@ -1,14 +1,15 @@
 import { Server, Socket } from "socket.io";
 import { Player } from "../types/playerModel";
-import { Room } from "../types/lobbyModel";
 import { room } from "../server";
 import { v4 as uuidv4 } from "uuid";
+import { toPublicRoom } from "./toPublicRoom";
+import { PrivateRoom } from "../types/lobbyModel";
 
 export const lobbyManager = (io: Server, socket: Socket) => {
-  socket.on("create-lobby", (username, callBack) => {
+  socket.on("create-lobby", (username: string, callBack) => {
     const roomID = uuidv4().slice(0, 6).toUpperCase();
 
-    const player: Player = {
+    const hostPlayer: Player = {
       id: socket.id,
       name: username,
       hand: [],
@@ -16,10 +17,10 @@ export const lobbyManager = (io: Server, socket: Socket) => {
       properties: [],
     };
 
-    const newRoom: Room = {
+    const newRoom: PrivateRoom = {
       hostId: socket.id,
       name: username,
-      players: [player],
+      players: [hostPlayer],
       maxPlayers: 5,
       status: "waiting",
       deck: [],
@@ -29,22 +30,33 @@ export const lobbyManager = (io: Server, socket: Socket) => {
     };
 
     room.set(roomID, newRoom);
-
     socket.join(roomID);
 
     callBack({
       id: roomID,
-      room: newRoom,
+      room: toPublicRoom(newRoom),
       success: true,
     });
-    console.log(room);
   });
 
   socket.on("join-lobby", (data: { id: string; name: string }, callBack) => {
-    const targetRoom = room.get(data.id);
+    const roomID = data.id.toUpperCase();
+    const targetRoom = room.get(roomID);
 
     if (!targetRoom) {
       return callBack({ success: false, error: "Room not found" });
+    }
+
+    if (targetRoom.status !== "waiting") {
+      return callBack({ success: false, error: "Game has already started" });
+    }
+
+    if (targetRoom.players.length >= targetRoom.maxPlayers) {
+      return callBack({ success: false, error: "Room is full" });
+    }
+
+    if (targetRoom.players.some((p) => p.id === socket.id)) {
+      return callBack({ success: false, error: "You are already in this room" });
     }
 
     const newPlayer: Player = {
@@ -56,24 +68,22 @@ export const lobbyManager = (io: Server, socket: Socket) => {
     };
 
     targetRoom.players.push(newPlayer);
-
-    socket.join(data.id);
+    socket.join(roomID);
 
     const response = {
-      id: data.id,
-      room: targetRoom,
+      id: roomID,
+      room: toPublicRoom(targetRoom),
       success: true,
     };
 
-    io.to(data.id).emit("room-updated", response);
-    socket.to(data.id).emit("notification", `${data.name} joined the room!`);
+    io.to(roomID).emit("room-updated", response);
+    socket.to(roomID).emit("notification", `${data.name} joined the room!`);
 
     callBack(response);
   });
-  console.log(room);
+
   socket.on("disconnect", (reason) => {
     console.log(`${socket.id} disconnected: ${reason}`);
-
-    // Your player removal logic here
+    // Player removal logic here
   });
 };
