@@ -1,7 +1,12 @@
 import { createContext } from "react";
-import type { RoomModel } from "../../models/lobbyModel";
+import type { LobbyResponseModel } from "../../models/lobbyModel";
 
 interface LobbyContextModel {
-  lobby: RoomModel[];
+  lobby: LobbyResponseModel;
+  createLobby: (name: string) => Promise<LobbyResponseModel>;
+  joinLobby: (id: string, name: string) => Promise<LobbyResponseModel>;
 }
-export const lobbyContext = createContext<LobbyContextModel | null>(null);
+
+const LobbyContext = createContext<LobbyContextModel | null>(null);
+
+export default LobbyContext;

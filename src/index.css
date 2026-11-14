@@ -11,6 +11,8 @@
 
   /* Element color */
   --bg-panel-color: #fbf6e9;
+  --border-panel-color: #23744a;
+  --border-muted-panel-color: #898680;
 
   /* Input color */
   --input-bg-color: #ffffff;
@@ -44,7 +46,7 @@
 
   /* Border radius */
   --radius-card: 1rem;
-  --radius-panel: 1rem;
+  --radius-panel: 0.7rem;
   --radius-button: 0.5rem;
   --radius-input: 0.375rem;
 }

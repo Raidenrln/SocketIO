@@ -3,5 +3,15 @@ import type { Card } from "./cardModel";
 export type Player = {
   id: string;
   name: string;
-  card: Card[];
+  hand: Card[];
+  bank: Card[];
+  properties: Card[];
+};
+
+export type PublicPlayer = {
+  id: string;
+  name: string;
+  handCount: number;
+  bank: Card[];
+  properties: Card[];
 };

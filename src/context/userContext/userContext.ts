@@ -1,7 +1,7 @@
 import { createContext } from "react";
 
 export interface UserContextModel {
-  user: string;
+  username: string;
   addUser: (username: string) => void;
 }
 

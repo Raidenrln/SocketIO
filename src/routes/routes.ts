@@ -10,11 +10,11 @@ export const router = createBrowserRouter([
     Component: Home,
   },
   {
-    path: "lobby:id",
+    path: "lobby/:id",
     Component: Lobby,
   },
   {
-    path: "game:id",
+    path: "game/:id",
     Component: StartGame,
   },
 ]);

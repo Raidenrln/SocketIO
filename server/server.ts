@@ -1,88 +1,24 @@
 import { createServer } from "node:http";
 import { Server } from "socket.io";
 // import { Cards, cards } from "./cards";
-import { v4 as uuidv4 } from "uuid";
+import { gameManager } from "./game/gameManager";
+import { Room } from "./types/lobbyModel";
+import { lobbyManager } from "./lobby/lobbyManager";
 const httpServer = createServer();
 
-const io = new Server(httpServer, {
+export const io = new Server(httpServer, {
   cors: {
-    origin: "http://localhost:5173",
+    origin: ["http://localhost:5173", "http://192.168.0.101:5173"],
   },
+  pingInterval: 25000,
+  pingTimeout: 20000,
 });
 
-type Card = {
-  id: string;
-  value: string;
-  type: string;
-};
-
-type Player = {
-  id: string;
-  name: string;
-  card: Card[];
-};
-
-type Room = {
-  name: string;
-  players: Player[];
-  maxPlayers: number;
-  status: "waiting" | "playing";
-};
-
-const room = new Map<string, Room>();
+export const room = new Map<string, Room>();
 
 io.on("connection", (socket) => {
-  socket.on("create-lobby", (username, callBack) => {
-    const roomID = uuidv4().slice(0, 6).toUpperCase();
-
-    const player: Player = {
-      id: socket.id,
-      name: username,
-      card: [],
-    };
-
-    const newRoom: Room = {
-      name: username,
-      players: [player],
-      maxPlayers: 5,
-      status: "waiting",
-    };
-
-    room.set(roomID, newRoom);
-
-    socket.join(roomID);
-
-    callBack({
-      id: roomID,
-      room: newRoom,
-      success: true,
-    });
-    console.log(room);
-  });
-
-  socket.on("join-room", (data: { id: string; name: string }, callBack) => {
-    const targetRoom = room.get(data.id);
-
-    if (!targetRoom) {
-      return callBack({ success: false, error: "Room not found" });
-    }
-
-    const newPlayer: Player = {
-      id: socket.id,
-      name: data.name,
-      card: [],
-    };
-
-    targetRoom.players.push(newPlayer);
-
-    socket.join(data.id);
-
-    io.to(data.id).emit("room-updated", targetRoom);
-    socket.to(data.id).emit("notification", `${data.name} joined the room!`);
-
-    callBack({ success: true, room: targetRoom });
-  });
-
+  gameManager(io, socket);
+  lobbyManager(io, socket);
   // socket.on("start-game", (id, callBack) => {});
 });
 
