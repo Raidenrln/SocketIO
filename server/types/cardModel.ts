@@ -6,4 +6,5 @@ export type Card = {
   secondaryColor?: string;
   color?: string;
   isWildcard?: boolean;
+  description?: string;
 };

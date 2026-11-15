@@ -38,4 +38,47 @@ export const cardManager = (io: Server, socket: Socket) => {
       success: true,
     });
   });
+
+  socket.on("place-card", ({ roomId, cardId, playerId }, callBack) => {
+    const targetRoom = room.get(roomId);
+
+    if (!targetRoom) {
+      return callBack({
+        success: false,
+        message: "Room does not exist",
+      });
+    }
+
+    const targetPlayer = targetRoom?.players.find((p) => p.id === playerId);
+
+    if (!targetPlayer) {
+      return callBack({
+        success: false,
+        message: "Player does not exist",
+      });
+    }
+
+    const cardIndex = targetPlayer.hand.findIndex((c) => c.id === cardId);
+
+    if (cardIndex === -1) {
+      return callBack({
+        success: false,
+        message: "This card does not exist",
+      });
+    }
+
+    const [targetPlayerCard] = targetPlayer.hand.splice(cardIndex, 1);
+
+    targetPlayer.properties.push(targetPlayerCard);
+
+    io.to(targetPlayer.id).emit("your-hand", targetPlayer.hand);
+
+    io.to(roomId).emit("room-updated", {
+      id: roomId,
+      room: toPublicRoom(targetRoom),
+      success: true,
+    });
+
+    callBack({ success: true });
+  });
 };
