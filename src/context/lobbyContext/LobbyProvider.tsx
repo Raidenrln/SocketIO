@@ -12,7 +12,7 @@ export const LobbyProvider = ({ children }: { children: React.ReactNode }) => {
       players: [],
       maxPlayers: 5,
       status: "waiting",
-      deck: [],
+      deck: 0,
       discardPile: [],
       currentPlayerIndex: 0,
       turn: 0,
@@ -57,20 +57,23 @@ export const LobbyProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   useEffect(() => {
-    const handleRoomUpdated = (response: LobbyResponseModel) => {
-      setLobby(response);
-    };
+    const handleRoomUpdated = (payload: LobbyResponseModel) => {
+      console.log("Room received:", payload);
 
-    const handleGameStarted = (response: LobbyResponseModel) => {
-      setLobby(response);
+      setLobby((prev) => ({
+        ...prev,
+        id: payload.id ?? prev.id,
+        room: payload.room,
+        success: payload.success,
+      }));
     };
 
     socket.on("room-updated", handleRoomUpdated);
-    socket.on("game-started", handleGameStarted);
+    socket.on("game-started", handleRoomUpdated);
 
     return () => {
       socket.off("room-updated", handleRoomUpdated);
-      socket.off("game-started", handleGameStarted);
+      socket.off("game-started", handleRoomUpdated);
     };
   }, []);
 

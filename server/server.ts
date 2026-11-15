@@ -4,14 +4,13 @@ import { Server } from "socket.io";
 import { gameManager } from "./game/gameManager";
 import { PrivateRoom } from "./types/lobbyModel";
 import { lobbyManager } from "./lobby/lobbyManager";
+import { cardManager } from "./game/cardManager";
 const httpServer = createServer();
 
 export const io = new Server(httpServer, {
   cors: {
     origin: ["http://localhost:5173", "http://192.168.0.101:5173"],
   },
-  pingInterval: 25000,
-  pingTimeout: 20000,
 });
 
 export const room = new Map<string, PrivateRoom>();
@@ -19,6 +18,7 @@ export const room = new Map<string, PrivateRoom>();
 io.on("connection", (socket) => {
   gameManager(io, socket);
   lobbyManager(io, socket);
+  cardManager(io, socket);
   // socket.on("start-game", (id, callBack) => {});
 });
 

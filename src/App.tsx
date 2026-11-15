@@ -6,13 +6,13 @@ import { GameProvider } from "./context/gameContext/GameProvider";
 
 function App() {
   return (
-    <GameProvider>
-      <UserProvider>
-        <LobbyProvider>
+    <LobbyProvider>
+      <GameProvider>
+        <UserProvider>
           <RouterProvider router={router} />
-        </LobbyProvider>
-      </UserProvider>
-    </GameProvider>
+        </UserProvider>
+      </GameProvider>
+    </LobbyProvider>
   );
 }
 

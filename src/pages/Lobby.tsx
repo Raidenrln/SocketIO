@@ -45,7 +45,7 @@ function Lobby() {
         <div className="flex justify-between">
           <span className="text-body">Players</span>
           <span className="text-body">
-            {lobby.room.players.length} of {lobby.room.maxPlayers} players
+            {players.length} of {lobby.room.maxPlayers} players
           </span>
         </div>
         <div>
