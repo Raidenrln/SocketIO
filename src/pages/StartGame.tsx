@@ -2,8 +2,9 @@ import { useLobby } from "../context/lobbyContext/useLobby";
 import { useGame } from "../context/gameContext/useGame";
 import { useEffect, useState } from "react";
 import { socket } from "../socket";
-import { propertyConfig, type PropertyColor } from "../constants/propertyConfig";
 import PropertyCard from "../components/PropertyCard";
+import MoneyCard from "../components/MoneyCard";
+import ActionCard from "../components/ActionCard";
 
 const StartGame = () => {
   const { lobby } = useLobby();
@@ -15,11 +16,16 @@ const StartGame = () => {
 
   const localPlayer = players.find((p) => p.id === socket.id);
   const localPlayerProperties = localPlayer?.properties;
+  const localPlayerBank = localPlayer?.bank;
   const opponents = players.filter((p) => p.id !== socket.id);
 
   const opponentHandCount = opponents.reduce((total, p) => total + p.handCount, 0);
-
   const opponentProperty = opponents[0];
+  const opponentBank = opponentProperty.bank;
+
+  const handleSelectedCard = (cardId: string) => {
+    setSelectedCard(cardId);
+  };
 
   useEffect(() => {
     if (!room) return;
@@ -30,15 +36,27 @@ const StartGame = () => {
     // console.log("Local player:", localPlayer);
     console.log("Hand:", hand);
     console.log("Properties", localPlayerProperties);
-  }, [room, opponentHandCount, opponentProperty, localPlayer, hand, localPlayerProperties]);
+    console.log("Bank:", localPlayerBank);
+
+    console.log(selectedCard);
+  }, [
+    room,
+    opponentHandCount,
+    opponentProperty,
+    localPlayer,
+    hand,
+    localPlayerProperties,
+    selectedCard,
+    localPlayerBank,
+  ]);
 
   if (!room) {
     return <div>Loading game...</div>;
   }
 
   return (
-    <div className="min-h-screen bg-(--bg-color)">
-      <div className="p-4">
+    <div className="flex flex-col items h-screen bg-(--bg-color)">
+      <div className="h-full p-4 flex flex-col justify-between">
         {/* Opponent hand */}
         <div className="w-full flex items-center justify-center">
           <div className="flex gap-2">
@@ -52,12 +70,32 @@ const StartGame = () => {
         </div>
 
         {/* Opponent properties */}
-        <div className="flex gap-2">
-          {opponentProperty.properties.map((c) => {
-            if (c.type !== "property") return;
-            return <PropertyCard c={c} />;
-          })}
+        <div className="flex w-full items-center">
+          <div className="flex h-fit gap-2 w-full p-2 border border-white">
+            {opponentProperty ? (
+              <div className="flex gap-2 h-full w-full ">
+                {opponentProperty.properties
+                  .filter((c) => c.type === "property")
+                  .map((c) => (
+                    <PropertyCard key={c.id} card={c} />
+                  ))}
+              </div>
+            ) : (
+              <div className="text-white text-center">Waiting for opponent...</div>
+            )}
+          </div>
+          <div className="flex h-full p-2 w-41.25">
+            <div className="flex gap-2 h-full w-full p-2 rounded-sm justify-center">
+              {opponentBank.length ? (
+                <PropertyCard
+                  key={opponentBank[opponentBank.length - 1].id}
+                  card={opponentBank[opponentBank.length - 1]}
+                />
+              ) : null}
+            </div>
+          </div>
         </div>
+
         {/* Remaining deck */}
         <div className="flex items-center justify-center gap-8">
           <div className="flex flex-col items-center justify-center">
@@ -77,17 +115,49 @@ const StartGame = () => {
           </div>
         </div>
         {/* Local player properties and banks */}
-        <div className="flex gap-2">
-          {localPlayerProperties?.map((c) => {
-            if (c.type !== "property") return;
-            return <PropertyCard c={c} />;
-          })}
+        <div className="flex w-full items-center">
+          <div className="flex h-full p-2 flex-1">
+            <div
+              className="flex gap-2 border border-white h-full w-full p-2 rounded-sm justify-center"
+              onClick={() => handlePlacingCard(localPlayer!.id, selectedCard, "property")}
+            >
+              {localPlayerProperties?.map((c) => {
+                if (c.type !== "property") return;
+                return <PropertyCard card={c} playerid={localPlayer!.id} />;
+              })}
+            </div>
+          </div>
+          <div className="flex h-full w-41.25">
+            <div
+              className="flex gap-2 h-full w-full p-2 rounded-sm justify-center items-center"
+              onClick={() => handlePlacingCard(localPlayer!.id, selectedCard, "bank")}
+            >
+              {localPlayerBank?.length ? (
+                <PropertyCard
+                  key={localPlayerBank[localPlayerBank.length - 1].id}
+                  card={localPlayerBank[localPlayerBank.length - 1]}
+                />
+              ) : null}
+            </div>
+          </div>
         </div>
 
         {/* Your hand */}
         <div className="flex items-center justify-center gap-2">
           {hand.map((c) => {
-            return <PropertyCard c={c} />;
+            return (
+              <div>
+                <PropertyCard
+                  key={c.id}
+                  card={c}
+                  selectedCard={handleSelectedCard}
+                  playerid={localPlayer?.id}
+                />
+                <MoneyCard card={c} />
+
+                <ActionCard card={c} />
+              </div>
+            );
           })}
         </div>
       </div>

@@ -23,7 +23,7 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
     );
   };
 
-  const handlePlacingCard = (playerId: string, cardId: string) => {
+  const handlePlacingCard = (playerId: string, cardId: string, toWhere: string) => {
     console.log("Player Card:", playerId, cardId);
     socket.emit(
       "place-card",
@@ -31,6 +31,7 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
         roomId: lobby.id,
         cardId,
         playerId,
+        toWhere,
       },
       (response: { success: boolean; message: string }) => {
         if (!response.success) {

@@ -39,7 +39,7 @@ export const cardManager = (io: Server, socket: Socket) => {
     });
   });
 
-  socket.on("place-card", ({ roomId, cardId, playerId }, callBack) => {
+  socket.on("place-card", ({ roomId, cardId, playerId, toWhere }, callBack) => {
     const targetRoom = room.get(roomId);
 
     if (!targetRoom) {
@@ -67,12 +67,31 @@ export const cardManager = (io: Server, socket: Socket) => {
       });
     }
 
-    const [targetPlayerCard] = targetPlayer.hand.splice(cardIndex, 1);
+    const targetPlayerCard = targetPlayer.hand[cardIndex];
 
-    targetPlayer.properties.push(targetPlayerCard);
+    if (toWhere === "property") {
+      if (targetPlayerCard.type !== "property") {
+        return callBack({
+          success: false,
+          message: "You can't put that card here.",
+        });
+      }
+
+      targetPlayer.hand.splice(cardIndex, 1);
+      targetPlayer.properties.push(targetPlayerCard);
+    } else if (toWhere === "bank") {
+      if (targetPlayerCard.value === 0) {
+        return callBack({
+          success: false,
+          message: "You can't put that card here.",
+        });
+      }
+
+      targetPlayer.hand.splice(cardIndex, 1);
+      targetPlayer.bank.push(targetPlayerCard);
+    }
 
     io.to(targetPlayer.id).emit("your-hand", targetPlayer.hand);
-
     io.to(roomId).emit("room-updated", {
       id: roomId,
       room: toPublicRoom(targetRoom),

@@ -283,6 +283,7 @@ export const cards: Card[] = [
     type: "action",
     value: 5,
     description: "Steal a complete set of properties from any player.",
+    color: "#726EA9",
   },
   {
     id: "action-dealbreaker-2",
@@ -290,6 +291,7 @@ export const cards: Card[] = [
     type: "action",
     value: 5,
     description: "Steal a complete set of properties from any player.",
+    color: "#726EA9",
   },
 
   // Just Say No (3)
@@ -306,6 +308,7 @@ export const cards: Card[] = [
     type: "action",
     value: 4,
     description: "Use any time an action card is played against you.",
+    color: "#6C98B6",
   },
   {
     id: "action-justsayno-3",
@@ -313,6 +316,7 @@ export const cards: Card[] = [
     type: "action",
     value: 4,
     description: "Use any time an action card is played against you.",
+    color: "#6C98B6",
   },
 
   // Sly Deal (3)
@@ -322,6 +326,7 @@ export const cards: Card[] = [
     type: "action",
     value: 3,
     description: "Steal a property from the player of your choice (cannot be part of a full set).",
+    color: "#AAA8B0",
   },
   {
     id: "action-slydeal-2",
@@ -329,6 +334,7 @@ export const cards: Card[] = [
     type: "action",
     value: 3,
     description: "Steal a property from the player of your choice (cannot be part of a full set).",
+    color: "#AAA8B0",
   },
   {
     id: "action-slydeal-3",
@@ -336,6 +342,7 @@ export const cards: Card[] = [
     type: "action",
     value: 3,
     description: "Steal a property from the player of your choice (cannot be part of a full set).",
+    color: "#AAA8B0",
   },
 
   // Force Deal (4)
@@ -345,6 +352,7 @@ export const cards: Card[] = [
     type: "action",
     value: 3,
     description: "Swap any property with another player (cannot be part of a full set).",
+    color: "#AFB1B4",
   },
   {
     id: "action-forcedeal-2",
@@ -352,6 +360,7 @@ export const cards: Card[] = [
     type: "action",
     value: 3,
     description: "Swap any property with another player (cannot be part of a full set).",
+    color: "#AFB1B4",
   },
   {
     id: "action-forcedeal-3",
@@ -359,6 +368,7 @@ export const cards: Card[] = [
     type: "action",
     value: 3,
     description: "Swap any property with another player (cannot be part of a full set).",
+    color: "#AFB1B4",
   },
   {
     id: "action-forcedeal-4",
@@ -366,6 +376,7 @@ export const cards: Card[] = [
     type: "action",
     value: 3,
     description: "Swap any property with another player (cannot be part of a full set).",
+    color: "#AFB1B4",
   },
 
   // Debt Collector (3)
@@ -375,6 +386,7 @@ export const cards: Card[] = [
     type: "action",
     value: 3,
     description: "Force any player to pay you 5M.",
+    color: "#ACB9BC",
   },
   {
     id: "action-debtcollector-2",
@@ -382,6 +394,7 @@ export const cards: Card[] = [
     type: "action",
     value: 3,
     description: "Force any player to pay you 5M.",
+    color: "#ACB9BC",
   },
   {
     id: "action-debtcollector-3",
@@ -389,6 +402,7 @@ export const cards: Card[] = [
     type: "action",
     value: 3,
     description: "Force any player to pay you 5M.",
+    color: "#ACB9BC",
   },
 
   // It's My Birthday (3)
@@ -398,6 +412,7 @@ export const cards: Card[] = [
     type: "action",
     value: 2,
     description: "All players give you 2M as a gift.",
+    color: "#B1A3A6",
   },
   {
     id: "action-birthday-2",
@@ -405,6 +420,7 @@ export const cards: Card[] = [
     type: "action",
     value: 2,
     description: "All players give you 2M as a gift.",
+    color: "#B1A3A6",
   },
   {
     id: "action-birthday-3",
@@ -412,6 +428,7 @@ export const cards: Card[] = [
     type: "action",
     value: 2,
     description: "All players give you 2M as a gift.",
+    color: "#B1A3A6",
   },
 
   // Pass Go (10)
@@ -421,6 +438,7 @@ export const cards: Card[] = [
     type: "action",
     value: 1,
     description: "Draw 2 extra cards.",
+    color: "#C3C2BE",
   },
   {
     id: "action-passgo-2",
@@ -428,6 +446,7 @@ export const cards: Card[] = [
     type: "action",
     value: 1,
     description: "Draw 2 extra cards.",
+    color: "#C3C2BE",
   },
   {
     id: "action-passgo-3",
@@ -435,6 +454,7 @@ export const cards: Card[] = [
     type: "action",
     value: 1,
     description: "Draw 2 extra cards.",
+    color: "#C3C2BE",
   },
   {
     id: "action-passgo-4",
@@ -442,6 +462,7 @@ export const cards: Card[] = [
     type: "action",
     value: 1,
     description: "Draw 2 extra cards.",
+    color: "#C3C2BE",
   },
   {
     id: "action-passgo-5",
@@ -449,6 +470,7 @@ export const cards: Card[] = [
     type: "action",
     value: 1,
     description: "Draw 2 extra cards.",
+    color: "#C3C2BE",
   },
   {
     id: "action-passgo-6",
@@ -456,6 +478,7 @@ export const cards: Card[] = [
     type: "action",
     value: 1,
     description: "Draw 2 extra cards.",
+    color: "#C3C2BE",
   },
   {
     id: "action-passgo-7",
@@ -463,6 +486,7 @@ export const cards: Card[] = [
     type: "action",
     value: 1,
     description: "Draw 2 extra cards.",
+    color: "#C3C2BE",
   },
   {
     id: "action-passgo-8",
@@ -470,6 +494,7 @@ export const cards: Card[] = [
     type: "action",
     value: 1,
     description: "Draw 2 extra cards.",
+    color: "#C3C2BE",
   },
   {
     id: "action-passgo-9",
@@ -477,6 +502,7 @@ export const cards: Card[] = [
     type: "action",
     value: 1,
     description: "Draw 2 extra cards.",
+    color: "#C3C2BE",
   },
   {
     id: "action-passgo-10",
@@ -484,6 +510,7 @@ export const cards: Card[] = [
     type: "action",
     value: 1,
     description: "Draw 2 extra cards.",
+    color: "#C3C2BE",
   },
 
   // House (3)
@@ -494,6 +521,7 @@ export const cards: Card[] = [
     value: 3,
     description:
       "Add onto any full set you own to add 3M to the rent value (except Railroads and Utilities).",
+    color: "#B6BDBE",
   },
   {
     id: "action-house-2",
@@ -502,6 +530,7 @@ export const cards: Card[] = [
     value: 3,
     description:
       "Add onto any full set you own to add 3M to the rent value (except Railroads and Utilities).",
+    color: "#B6BDBE",
   },
   {
     id: "action-house-3",
@@ -510,6 +539,7 @@ export const cards: Card[] = [
     value: 3,
     description:
       "Add onto any full set you own to add 3M to the rent value (except Railroads and Utilities).",
+    color: "#B6BDBE",
   },
 
   // Hotel (3)
@@ -519,6 +549,7 @@ export const cards: Card[] = [
     type: "action",
     value: 4,
     description: "Add onto any full set you own (with a House) to add 4M to the rent value.",
+    color: "#B6C6E0",
   },
   {
     id: "action-hotel-2",
@@ -526,6 +557,7 @@ export const cards: Card[] = [
     type: "action",
     value: 4,
     description: "Add onto any full set you own (with a House) to add 4M to the rent value.",
+    color: "#B6C6E0",
   },
   {
     id: "action-hotel-3",
@@ -533,40 +565,55 @@ export const cards: Card[] = [
     type: "action",
     value: 4,
     description: "Add onto any full set you own (with a House) to add 4M to the rent value.",
+    color: "#B6C6E0",
+  },
+  {
+    id: "double-rent-2",
+    name: "Double rent",
+    type: "action",
+    value: 1,
+    color: "#BCBCB2",
+  },
+  {
+    id: "Double rent",
+    name: "Hotel",
+    type: "action",
+    value: 1,
+    color: "#BCBCB2",
   },
 
   // ==========================================
   // MONEY CARDS (20 cards)
   // ==========================================
   // 1M (6)
-  { id: "money-1m-1", name: "1M", type: "money", value: 1 },
-  { id: "money-1m-2", name: "1M", type: "money", value: 1 },
-  { id: "money-1m-3", name: "1M", type: "money", value: 1 },
-  { id: "money-1m-4", name: "1M", type: "money", value: 1 },
-  { id: "money-1m-5", name: "1M", type: "money", value: 1 },
-  { id: "money-1m-6", name: "1M", type: "money", value: 1 },
+  { id: "money-1m-1", name: "1M", type: "money", value: 1, color: "#B9BFAF" },
+  { id: "money-1m-2", name: "1M", type: "money", value: 1, color: "#B9BFAF" },
+  { id: "money-1m-3", name: "1M", type: "money", value: 1, color: "#B9BFAF" },
+  { id: "money-1m-4", name: "1M", type: "money", value: 1, color: "#B9BFAF" },
+  { id: "money-1m-5", name: "1M", type: "money", value: 1, color: "#B9BFAF" },
+  { id: "money-1m-6", name: "1M", type: "money", value: 1, color: "#B9BFAF" },
 
   // 2M (5)
-  { id: "money-2m-1", name: "2M", type: "money", value: 2 },
-  { id: "money-2m-2", name: "2M", type: "money", value: 2 },
-  { id: "money-2m-3", name: "2M", type: "money", value: 2 },
-  { id: "money-2m-4", name: "2M", type: "money", value: 2 },
-  { id: "money-2m-5", name: "2M", type: "money", value: 2 },
+  { id: "money-2m-1", name: "2M", type: "money", value: 2, color: "#B8B7BD" },
+  { id: "money-2m-2", name: "2M", type: "money", value: 2, color: "#B8B7BD" },
+  { id: "money-2m-3", name: "2M", type: "money", value: 2, color: "#B8B7BD" },
+  { id: "money-2m-4", name: "2M", type: "money", value: 2, color: "#B8B7BD" },
+  { id: "money-2m-5", name: "2M", type: "money", value: 2, color: "#B8B7BD" },
 
   // 3M (3)
-  { id: "money-3m-1", name: "3M", type: "money", value: 3 },
-  { id: "money-3m-2", name: "3M", type: "money", value: 3 },
-  { id: "money-3m-3", name: "3M", type: "money", value: 3 },
+  { id: "money-3m-1", name: "3M", type: "money", value: 3, color: "#B6B8B7" },
+  { id: "money-3m-2", name: "3M", type: "money", value: 3, color: "#B6B8B7" },
+  { id: "money-3m-3", name: "3M", type: "money", value: 3, color: "#B6B8B7" },
 
   // 4M (3)
-  { id: "money-4m-1", name: "4M", type: "money", value: 4 },
-  { id: "money-4m-2", name: "4M", type: "money", value: 4 },
-  { id: "money-4m-3", name: "4M", type: "money", value: 4 },
+  { id: "money-4m-1", name: "4M", type: "money", value: 4, color: "#93A7C8" },
+  { id: "money-4m-2", name: "4M", type: "money", value: 4, color: "#93A7C8" },
+  { id: "money-4m-3", name: "4M", type: "money", value: 4, color: "#93A7C8" },
 
   // 5M (2)
-  { id: "money-5m-1", name: "5M", type: "money", value: 5 },
-  { id: "money-5m-2", name: "5M", type: "money", value: 5 },
+  { id: "money-5m-1", name: "5M", type: "money", value: 5, color: "#7774AD" },
+  { id: "money-5m-2", name: "5M", type: "money", value: 5, color: "#7774AD" },
 
   // 10M (1)
-  { id: "money-10m-1", name: "10M", type: "money", value: 10 },
+  { id: "money-10m-1", name: "10M", type: "money", value: 10, color: "#B49450" },
 ];
