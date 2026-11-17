@@ -2,9 +2,9 @@ import { useLobby } from "../context/lobbyContext/useLobby";
 import { useGame } from "../context/gameContext/useGame";
 import { useEffect, useState } from "react";
 import { socket } from "../socket";
-import PropertyCard from "../components/PropertyCard";
-import MoneyCard from "../components/MoneyCard";
-import ActionCard from "../components/ActionCard";
+import PropertyCard from "../components/CardDesigns/PropertyCard";
+import BankCards from "../components/BankCards";
+import HandCard from "../components/HandCard";
 
 const StartGame = () => {
   const { lobby } = useLobby();
@@ -23,7 +23,7 @@ const StartGame = () => {
   const opponentProperty = opponents[0];
   const opponentBank = opponentProperty.bank;
 
-  const handleSelectedCard = (cardId: string) => {
+  const handleSelectedCardOnHand = (cardId: string) => {
     setSelectedCard(cardId);
   };
 
@@ -114,8 +114,9 @@ const StartGame = () => {
             <p className="text-caption text-white">Discard pile - 0</p>
           </div>
         </div>
-        {/* Local player properties and banks */}
+        {/* Local player properties and Banks */}
         <div className="flex w-full items-center">
+          {/* Local Player Properties */}
           <div className="flex h-full p-2 flex-1">
             <div
               className="flex gap-2 border border-white h-full w-full p-2 rounded-sm justify-center"
@@ -123,41 +124,27 @@ const StartGame = () => {
             >
               {localPlayerProperties?.map((c) => {
                 if (c.type !== "property") return;
-                return <PropertyCard card={c} playerid={localPlayer!.id} />;
+                return <PropertyCard card={c} />;
               })}
             </div>
           </div>
+          {/* Local Player Bank */}
           <div className="flex h-full w-41.25">
             <div
               className="flex gap-2 h-full w-full p-2 rounded-sm justify-center items-center"
               onClick={() => handlePlacingCard(localPlayer!.id, selectedCard, "bank")}
             >
               {localPlayerBank?.length ? (
-                <PropertyCard
-                  key={localPlayerBank[localPlayerBank.length - 1].id}
-                  card={localPlayerBank[localPlayerBank.length - 1]}
-                />
+                <BankCards card={localPlayerBank[localPlayerBank.length - 1]} />
               ) : null}
             </div>
           </div>
         </div>
 
-        {/* Your hand */}
+        {/* Local Player hand */}
         <div className="flex items-center justify-center gap-2">
           {hand.map((c) => {
-            return (
-              <div>
-                <PropertyCard
-                  key={c.id}
-                  card={c}
-                  selectedCard={handleSelectedCard}
-                  playerid={localPlayer?.id}
-                />
-                <MoneyCard card={c} />
-
-                <ActionCard card={c} />
-              </div>
-            );
+            return <HandCard card={c} onChoose={handleSelectedCardOnHand} />;
           })}
         </div>
       </div>

@@ -1,13 +1,12 @@
 import type { Card } from "../models/cardModel";
-import PropertyCard from "./PropertyCard";
+import CardRenderer from "./CardRenderer";
 
 interface BankCardsModel {
   card: Card;
 }
+
 const BankCards = ({ card }: BankCardsModel) => {
-  if (card.type === "property") {
-    return <PropertyCard card={card} />;
-  }
+  return <CardRenderer card={card} />;
 };
 
 export default BankCards;

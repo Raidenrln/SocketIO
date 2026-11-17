@@ -1,13 +1,12 @@
-import { propertyConfig, type PropertyColor } from "../constants/propertyConfig";
-import type { Card } from "../models/cardModel";
+import { propertyConfig, type PropertyColor } from "../../constants/propertyConfig";
+import type { Card } from "../../models/cardModel";
 
 type PropertyCardModel = {
   card: Card;
-  playerid?: string;
-  selectedCard?: (cardId: string) => void;
+  onClickCard?: (cardId: string) => void;
 };
 
-const PropertyCard = ({ card, selectedCard }: PropertyCardModel) => {
+const PropertyCard = ({ card, onClickCard }: PropertyCardModel) => {
   if (card.type !== "property") return;
   const colors = card.color ? propertyConfig[card.color].hex : "#ffffff";
   const colorx: PropertyColor | undefined = card.color;
@@ -17,10 +16,7 @@ const PropertyCard = ({ card, selectedCard }: PropertyCardModel) => {
     <div
       key={card.id}
       className="w-full min-w-32 max-w-32 h-45 bg-white rounded-sm z-1"
-      onClick={() => {
-        if (!selectedCard || !card.id) return;
-        selectedCard(card.id);
-      }}
+      onClick={() => onClickCard?.(card.id)}
     >
       <div className="p-2 h-full">
         <div className="p-2 relative border h-full">

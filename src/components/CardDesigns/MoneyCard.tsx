@@ -1,12 +1,16 @@
-import type { Card } from "../models/cardModel";
+import type { Card } from "../../models/cardModel";
 
 interface MoneyCard {
   card: Card;
+  onClickCard?: (cardId: string) => void;
 }
-const MoneyCard = ({ card }: MoneyCard) => {
+const MoneyCard = ({ card, onClickCard }: MoneyCard) => {
   if (card.type !== "money") return;
   return (
-    <div className={`w-full min-w-32 max-w-32 h-45 bg-white rounded-sm`}>
+    <div
+      className={`w-full min-w-32 max-w-32 h-45 bg-white rounded-sm`}
+      onClick={() => onClickCard?.(card.id)}
+    >
       <div className="p-2 h-full">
         <div
           className="flex items-center justify-center p-2 relative border h-full"
