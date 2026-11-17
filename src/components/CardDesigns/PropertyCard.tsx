@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import { propertyConfig, type PropertyColor } from "../../constants/propertyConfig";
 import type { Card } from "../../models/cardModel";
 
@@ -11,7 +12,13 @@ const PropertyCard = ({ card, onClickCard }: PropertyCardModel) => {
   const colors = card.color ? propertyConfig[card.color].hex : "#ffffff";
   const colorx: PropertyColor | undefined = card.color;
   const rentPrice = colorx ? propertyConfig[colorx].rentPrice : [];
-
+  const backgroundColor: CSSProperties = card.isWildcard
+    ? {
+        background: `linear-gradient(135deg, #FF0000 ,#FF7F00 ,#FFFF00 ,#00FF00 ,#0000FF ,#4B0082 ,#9400D3)`,
+      }
+    : {
+        backgroundColor: colors,
+      };
   return (
     <div
       key={card.id}
@@ -23,7 +30,7 @@ const PropertyCard = ({ card, onClickCard }: PropertyCardModel) => {
           <div className="flex bg-white h-5 w-5 rounded-full items-center justify-center absolute border left-0.5 top-0.5">
             <span className="text-[10px] font-semibold">{card.value}M</span>
           </div>
-          <div className="bg-white border" style={{ backgroundColor: colors }}>
+          <div className="bg-white border" style={backgroundColor}>
             <p className="text-caption whitespace-normal wrap-break-word text-center p-2 font-semibold">
               {card.name}
             </p>

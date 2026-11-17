@@ -6,7 +6,7 @@ interface HandCardModel {
   onChoose: (cardId: string) => void;
 }
 const HandCard = ({ card, onChoose }: HandCardModel) => {
-  return <CardRenderer card={card} variant="hand" onPressCard={onChoose} />;
+  return <CardRenderer card={card} variant="hand" onHandPressCard={onChoose} />;
 };
 
 export default HandCard;

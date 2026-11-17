@@ -5,7 +5,7 @@ export type Card = {
   name: string;
   type: "property" | "action" | "rent" | "money";
   value: number;
-  secondaryColor?: string;
   color?: PropertyColor;
+  secondaryColor?: PropertyColor;
   isWildcard?: boolean;
 };

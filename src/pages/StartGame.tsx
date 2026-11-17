@@ -24,9 +24,14 @@ const StartGame = () => {
   const opponentBank = opponentProperty.bank;
 
   const handleSelectedCardOnHand = (cardId: string) => {
-    setSelectedCard(cardId);
+    setSelectedCard((prev) => (prev === cardId ? "" : cardId));
   };
-
+  const handleEndTurn = (roomId: string, playerId: string) => {
+    socket.emit("end-turn", { roomId, playerId }, (response: { message: string }) => {
+      console.log(response.message);
+    });
+    console.log("end turn");
+  };
   useEffect(() => {
     if (!room) return;
 
@@ -55,7 +60,7 @@ const StartGame = () => {
   }
 
   return (
-    <div className="flex flex-col items h-screen bg-(--bg-color)">
+    <div className="flex flex-col items h-screen bg-(--bg-color) relative">
       <div className="h-full p-4 flex flex-col justify-between">
         {/* Opponent hand */}
         <div className="w-full flex items-center justify-center">
@@ -142,11 +147,33 @@ const StartGame = () => {
         </div>
 
         {/* Local Player hand */}
-        <div className="flex items-center justify-center gap-2">
-          {hand.map((c) => {
-            return <HandCard card={c} onChoose={handleSelectedCardOnHand} />;
-          })}
+        <div className="flex items-center justify-center gap-2 h-[200px]">
+          {hand.map((c) => (
+            <div
+              className={`transition-all duration-200 ease-out ${
+                c.id === selectedCard
+                  ? "-translate-y-3 scale-105 relative border-2 border-amber-300 rounded-md shadow-md"
+                  : "hover:-translate-y-1 relative"
+              }`}
+            >
+              <HandCard card={c} onChoose={handleSelectedCardOnHand} />
+            </div>
+          ))}
         </div>
+      </div>
+      {/* End turn button */}
+      <div className="absolute bottom-5 right-5 rounded-button overflow-hidden">
+        <button
+          className="bg-(--btn-bg-color) px-4 py-2 cursor-pointer"
+          style={{
+            opacity:
+              lobby.room.players[lobby.room.currentPlayerIndex].id !== localPlayer?.id ? 0.5 : 1,
+          }}
+          onClick={() => handleEndTurn(lobby.id, localPlayer!.id)}
+          disabled={lobby.room.players[lobby.room.currentPlayerIndex].id !== localPlayer?.id}
+        >
+          <span className="text-white">End turn</span>
+        </button>
       </div>
     </div>
   );

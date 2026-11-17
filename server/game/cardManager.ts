@@ -19,6 +19,27 @@ export const cardManager = (io: Server, socket: Socket) => {
       });
     }
 
+    if (!targetPlayer) {
+      return callBack({
+        success: false,
+        message: "This player doesn't exist",
+      });
+    }
+
+    if (targetRoom.players[targetRoom.currentPlayerIndex].id !== targetPlayer.id) {
+      return callBack({
+        success: false,
+        message: `Its ${targetRoom.players[targetRoom.currentPlayerIndex].name} turn.`,
+      });
+    }
+
+    if (targetPlayer?.hand.length >= 7) {
+      return callBack({
+        success: false,
+        message: "Only up to 7 card on hands is allowed",
+      });
+    }
+
     for (let i = 0; i < 2; i++) {
       const card = targetRoom?.deck.pop();
       if (card) {
@@ -55,6 +76,13 @@ export const cardManager = (io: Server, socket: Socket) => {
       return callBack({
         success: false,
         message: "Player does not exist",
+      });
+    }
+
+    if (targetRoom.players[targetRoom.currentPlayerIndex].id !== targetPlayer.id) {
+      return callBack({
+        success: false,
+        message: `Its ${targetRoom.players[targetRoom.currentPlayerIndex].name} turn.`,
       });
     }
 
