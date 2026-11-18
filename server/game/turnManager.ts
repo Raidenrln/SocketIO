@@ -35,7 +35,7 @@ export const turnManager = (io: Server, socket: Socket) => {
 
     if (targetPlayer.hand.length > 7) {
       return callback({
-        message: "Is not your turn.",
+        message: "You must discard cards until you have 7 cards.",
         success: false,
       });
     }

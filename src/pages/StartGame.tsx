@@ -1,15 +1,17 @@
 import { useLobby } from "../context/lobbyContext/useLobby";
 import { useGame } from "../context/gameContext/useGame";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { socket } from "../socket";
 import PropertyCard from "../components/CardDesigns/PropertyCard";
 import BankCards from "../components/BankCards";
 import HandCard from "../components/HandCard";
+import PropertyCardTable from "../components/PropertyCardTable";
+import { useSelectedCard } from "../context/selectedCard/useSelectedCard";
 
 const StartGame = () => {
   const { lobby } = useLobby();
   const { hand, handleDrawCard, handlePlacingCard } = useGame();
-  const [selectedCard, setSelectedCard] = useState("");
+  const { selectedCard } = useSelectedCard();
   const room = lobby.room;
 
   const players = room?.players ?? [];
@@ -23,27 +25,22 @@ const StartGame = () => {
   const opponentProperty = opponents[0];
   const opponentBank = opponentProperty.bank;
 
-  const handleSelectedCardOnHand = (cardId: string) => {
-    setSelectedCard((prev) => (prev === cardId ? "" : cardId));
-  };
   const handleEndTurn = (roomId: string, playerId: string) => {
     socket.emit("end-turn", { roomId, playerId }, (response: { message: string }) => {
       console.log(response.message);
     });
-    console.log("end turn");
   };
   useEffect(() => {
     if (!room) return;
 
     // console.log("Room:", room);
     // console.log("Opponent cards:", opponentHandCount);
-    console.log("Opponent:", opponentProperty);
+    // console.log("Opponent:", opponentProperty);
     // console.log("Local player:", localPlayer);
-    console.log("Hand:", hand);
+    // console.log("Hand:", hand);
     console.log("Properties", localPlayerProperties);
-    console.log("Bank:", localPlayerBank);
-
-    console.log(selectedCard);
+    // console.log("Bank:", localPlayerBank);
+    // console.log(selectedCard);
   }, [
     room,
     opponentHandCount,
@@ -51,8 +48,8 @@ const StartGame = () => {
     localPlayer,
     hand,
     localPlayerProperties,
-    selectedCard,
     localPlayerBank,
+    selectedCard,
   ]);
 
   if (!room) {
@@ -125,11 +122,11 @@ const StartGame = () => {
           <div className="flex h-full p-2 flex-1">
             <div
               className="flex gap-2 border border-white h-full w-full p-2 rounded-sm justify-center"
-              onClick={() => handlePlacingCard(localPlayer!.id, selectedCard, "property")}
+              onClick={() => handlePlacingCard(localPlayer!.id, selectedCard!.id, "property")}
             >
               {localPlayerProperties?.map((c) => {
                 if (c.type !== "property") return;
-                return <PropertyCard card={c} />;
+                return <PropertyCardTable card={c} />;
               })}
             </div>
           </div>
@@ -137,7 +134,7 @@ const StartGame = () => {
           <div className="flex h-full w-41.25">
             <div
               className="flex gap-2 h-full w-full p-2 rounded-sm justify-center items-center"
-              onClick={() => handlePlacingCard(localPlayer!.id, selectedCard, "bank")}
+              onClick={() => handlePlacingCard(localPlayer!.id, selectedCard!.id, "bank")}
             >
               {localPlayerBank?.length ? (
                 <BankCards card={localPlayerBank[localPlayerBank.length - 1]} />
@@ -147,17 +144,9 @@ const StartGame = () => {
         </div>
 
         {/* Local Player hand */}
-        <div className="flex items-center justify-center gap-2 h-[200px]">
+        <div className="flex items-center justify-center gap-2 h-50">
           {hand.map((c) => (
-            <div
-              className={`transition-all duration-200 ease-out ${
-                c.id === selectedCard
-                  ? "-translate-y-3 scale-105 relative border-2 border-amber-300 rounded-md shadow-md"
-                  : "hover:-translate-y-1 relative"
-              }`}
-            >
-              <HandCard card={c} onChoose={handleSelectedCardOnHand} />
-            </div>
+            <HandCard card={c} />
           ))}
         </div>
       </div>

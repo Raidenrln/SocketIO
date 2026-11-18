@@ -6,28 +6,18 @@ import RentCard from "./CardDesigns/RentCard";
 
 interface CardRendererModel {
   card: Card;
-  variant?: string;
-  onHandPressCard?: (cardId: string) => void;
 }
 
-const CardRenderer = ({ card, variant, onHandPressCard }: CardRendererModel) => {
+const CardRenderer = ({ card }: CardRendererModel) => {
   switch (card.type) {
     case "property":
-      return (
-        <PropertyCard card={card} onClickCard={variant === "hand" ? onHandPressCard : undefined} />
-      );
+      return <PropertyCard card={card} />;
     case "money":
-      return (
-        <MoneyCard card={card} onClickCard={variant === "hand" ? onHandPressCard : undefined} />
-      );
+      return <MoneyCard card={card} />;
     case "action":
-      return (
-        <ActionCard card={card} onClickCard={variant === "hand" ? onHandPressCard : undefined} />
-      );
+      return <ActionCard card={card} />;
     case "rent":
-      return (
-        <RentCard card={card} onClickCard={variant === "hand" ? onHandPressCard : undefined} />
-      );
+      return <RentCard card={card} />;
     default:
       return null;
   }

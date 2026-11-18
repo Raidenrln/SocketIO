@@ -3,12 +3,13 @@ import GameContext from "./gameContext";
 import type { Card } from "../../models/cardModel";
 import { socket } from "../../socket";
 import { useLobby } from "../lobbyContext/useLobby";
+import { useSelectedCard } from "../selectedCard/useSelectedCard";
 // import { useLobby } from "../lobbyContext/useLobby";
 
 export const GameProvider = ({ children }: { children: React.ReactNode }) => {
   const [hand, setHand] = useState<Card[]>([]);
   const { lobby } = useLobby();
-
+  const { handleSelectedCard } = useSelectedCard();
   // User draw card
 
   const handleDrawCard = (playerId: string, roomId: string) => {
@@ -24,7 +25,7 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const handlePlacingCard = (playerId: string, cardId: string, toWhere: string) => {
-    console.log("Player Card:", playerId, cardId);
+    // console.log("Player Card:", playerId, cardId);
     socket.emit(
       "place-card",
       {
@@ -39,12 +40,13 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
         }
       },
     );
+    handleSelectedCard(null);
   };
 
   useEffect(() => {
     const handleHand = (cards: Card[]) => {
       setHand(cards);
-      console.log("Updated hand:", cards);
+      // console.log("Updated hand:", cards);
     };
 
     socket.on("your-hand", handleHand);

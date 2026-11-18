@@ -4,10 +4,9 @@ import type { Card } from "../../models/cardModel";
 
 type PropertyCardModel = {
   card: Card;
-  onClickCard?: (cardId: string) => void;
 };
 
-const PropertyCard = ({ card, onClickCard }: PropertyCardModel) => {
+const PropertyCard = ({ card }: PropertyCardModel) => {
   if (card.type !== "property") return;
   const colors = card.color ? propertyConfig[card.color].hex : "#ffffff";
   const colorx: PropertyColor | undefined = card.color;
@@ -20,11 +19,7 @@ const PropertyCard = ({ card, onClickCard }: PropertyCardModel) => {
         backgroundColor: colors,
       };
   return (
-    <div
-      key={card.id}
-      className="w-full min-w-32 max-w-32 h-45 bg-white rounded-sm z-1"
-      onClick={() => onClickCard?.(card.id)}
-    >
+    <div key={card.id} className={`w-full min-w-32 max-w-32 h-45 bg-white rounded-sm`}>
       <div className="p-2 h-full">
         <div className="p-2 relative border h-full">
           <div className="flex bg-white h-5 w-5 rounded-full items-center justify-center absolute border left-0.5 top-0.5">

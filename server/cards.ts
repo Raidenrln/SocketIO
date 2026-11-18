@@ -5,54 +5,230 @@ export const cards: Card[] = [
   // STANDARD PROPERTIES (28 cards)
   // ==========================================
   // Brown (2)
-  { id: "prop-brown-1", name: "Mediterranean Avenue", type: "property", value: 1, color: "brown" },
-  { id: "prop-brown-2", name: "Baltic Avenue", type: "property", value: 1, color: "brown" },
+  {
+    id: "prop-brown-1",
+    name: "Mediterranean Avenue",
+    type: "property",
+    value: 1,
+    color: "brown",
+    isWildcard: false,
+  },
+  {
+    id: "prop-brown-2",
+    name: "Baltic Avenue",
+    type: "property",
+    value: 1,
+    color: "brown",
+    isWildcard: false,
+  },
 
   // Light Blue (3)
-  { id: "prop-lblue-1", name: "Oriental Avenue", type: "property", value: 1, color: "light_blue" },
-  { id: "prop-lblue-2", name: "Vermont Avenue", type: "property", value: 1, color: "light_blue" },
+  {
+    id: "prop-lblue-1",
+    name: "Oriental Avenue",
+    type: "property",
+    value: 1,
+    color: "light_blue",
+    isWildcard: false,
+  },
+  {
+    id: "prop-lblue-2",
+    name: "Vermont Avenue",
+    type: "property",
+    value: 1,
+    color: "light_blue",
+    isWildcard: false,
+  },
   {
     id: "prop-lblue-3",
     name: "Connecticut Avenue",
     type: "property",
     value: 1,
     color: "light_blue",
+    isWildcard: false,
   },
 
   // Pink (3)
-  { id: "prop-pink-1", name: "St. Charles Place", type: "property", value: 2, color: "pink" },
-  { id: "prop-pink-2", name: "States Avenue", type: "property", value: 2, color: "pink" },
-  { id: "prop-pink-3", name: "Virginia Avenue", type: "property", value: 2, color: "pink" },
+  {
+    id: "prop-pink-1",
+    name: "St. Charles Place",
+    type: "property",
+    value: 2,
+    color: "pink",
+    isWildcard: false,
+  },
+  {
+    id: "prop-pink-2",
+    name: "States Avenue",
+    type: "property",
+    value: 2,
+    color: "pink",
+    isWildcard: false,
+  },
+  {
+    id: "prop-pink-3",
+    name: "Virginia Avenue",
+    type: "property",
+    value: 2,
+    color: "pink",
+    isWildcard: false,
+  },
 
   // Orange (3)
-  { id: "prop-orange-1", name: "St. James Place", type: "property", value: 2, color: "orange" },
-  { id: "prop-orange-2", name: "Tennessee Avenue", type: "property", value: 2, color: "orange" },
-  { id: "prop-orange-3", name: "New York Avenue", type: "property", value: 2, color: "orange" },
+  {
+    id: "prop-orange-1",
+    name: "St. James Place",
+    type: "property",
+    value: 2,
+    color: "orange",
+    isWildcard: false,
+  },
+  {
+    id: "prop-orange-2",
+    name: "Tennessee Avenue",
+    type: "property",
+    value: 2,
+    color: "orange",
+    isWildcard: false,
+  },
+  {
+    id: "prop-orange-3",
+    name: "New York Avenue",
+    type: "property",
+    value: 2,
+    color: "orange",
+    isWildcard: false,
+  },
 
   // Red (3)
-  { id: "prop-red-1", name: "Kentucky Avenue", type: "property", value: 3, color: "red" },
-  { id: "prop-red-2", name: "Indiana Avenue", type: "property", value: 3, color: "red" },
-  { id: "prop-red-3", name: "Illinois Avenue", type: "property", value: 3, color: "red" },
+  {
+    id: "prop-red-1",
+    name: "Kentucky Avenue",
+    type: "property",
+    value: 3,
+    color: "red",
+    isWildcard: false,
+  },
+  {
+    id: "prop-red-2",
+    name: "Indiana Avenue",
+    type: "property",
+    value: 3,
+    color: "red",
+    isWildcard: false,
+  },
+  {
+    id: "prop-red-3",
+    name: "Illinois Avenue",
+    type: "property",
+    value: 3,
+    color: "red",
+    isWildcard: false,
+  },
 
   // Yellow (3)
-  { id: "prop-yellow-1", name: "Atlantic Avenue", type: "property", value: 3, color: "yellow" },
-  { id: "prop-yellow-2", name: "Ventnor Avenue", type: "property", value: 3, color: "yellow" },
-  { id: "prop-yellow-3", name: "Marvin Gardens", type: "property", value: 3, color: "yellow" },
+  {
+    id: "prop-yellow-1",
+    name: "Atlantic Avenue",
+    type: "property",
+    value: 3,
+    color: "yellow",
+    isWildcard: false,
+  },
+  {
+    id: "prop-yellow-2",
+    name: "Ventnor Avenue",
+    type: "property",
+    value: 3,
+    color: "yellow",
+    isWildcard: false,
+  },
+  {
+    id: "prop-yellow-3",
+    name: "Marvin Gardens",
+    type: "property",
+    value: 3,
+    color: "yellow",
+    isWildcard: false,
+  },
 
   // Green (3)
-  { id: "prop-green-1", name: "Pacific Avenue", type: "property", value: 4, color: "green" },
-  { id: "prop-green-2", name: "North Carolina Avenue", type: "property", value: 4, color: "green" },
-  { id: "prop-green-3", name: "Pennsylvania Avenue", type: "property", value: 4, color: "green" },
+  {
+    id: "prop-green-1",
+    name: "Pacific Avenue",
+    type: "property",
+    value: 4,
+    color: "green",
+    isWildcard: false,
+  },
+  {
+    id: "prop-green-2",
+    name: "North Carolina Avenue",
+    type: "property",
+    value: 4,
+    color: "green",
+    isWildcard: false,
+  },
+  {
+    id: "prop-green-3",
+    name: "Pennsylvania Avenue",
+    type: "property",
+    value: 4,
+    color: "green",
+    isWildcard: false,
+  },
 
   // Dark Blue (2)
-  { id: "prop-blue-1", name: "Park Place", type: "property", value: 4, color: "blue" },
-  { id: "prop-blue-2", name: "Boardwalk", type: "property", value: 4, color: "blue" },
+  {
+    id: "prop-blue-1",
+    name: "Park Place",
+    type: "property",
+    value: 4,
+    color: "blue",
+    isWildcard: false,
+  },
+  {
+    id: "prop-blue-2",
+    name: "Boardwalk",
+    type: "property",
+    value: 4,
+    color: "blue",
+    isWildcard: false,
+  },
 
   // Railroads / Black (4)
-  { id: "prop-black-1", name: "Reading Railroad", type: "property", value: 2, color: "black" },
-  { id: "prop-black-2", name: "Pennsylvania Railroad", type: "property", value: 2, color: "black" },
-  { id: "prop-black-3", name: "B. & O. Railroad", type: "property", value: 2, color: "black" },
-  { id: "prop-black-4", name: "Short Line", type: "property", value: 2, color: "black" },
+  {
+    id: "prop-black-1",
+    name: "Reading Railroad",
+    type: "property",
+    value: 2,
+    color: "black",
+    isWildcard: false,
+  },
+  {
+    id: "prop-black-2",
+    name: "Pennsylvania Railroad",
+    type: "property",
+    value: 2,
+    color: "black",
+    isWildcard: false,
+  },
+  {
+    id: "prop-black-3",
+    name: "B. & O. Railroad",
+    type: "property",
+    value: 2,
+    color: "black",
+    isWildcard: false,
+  },
+  {
+    id: "prop-black-4",
+    name: "Short Line",
+    type: "property",
+    value: 2,
+    color: "black",
+    isWildcard: false,
+  },
 
   // Utilities / Light Green (2)
   {
@@ -61,8 +237,16 @@ export const cards: Card[] = [
     type: "property",
     value: 2,
     color: "light_green",
+    isWildcard: true,
   },
-  { id: "prop-lgreen-2", name: "Water Works", type: "property", value: 2, color: "light_green" },
+  {
+    id: "prop-lgreen-2",
+    name: "Water Works",
+    type: "property",
+    value: 2,
+    color: "light_green",
+    isWildcard: true,
+  },
 
   // ==========================================
   // PROPERTY WILDCARDS (11 cards)

@@ -29,7 +29,6 @@ export const LobbyProvider = ({ children }: { children: React.ReactNode }) => {
         }
 
         setLobby(response);
-        console.log(lobby);
         resolve(response);
       });
     });
@@ -43,23 +42,18 @@ export const LobbyProvider = ({ children }: { children: React.ReactNode }) => {
       };
       socket.emit("join-lobby", data, (response: LobbyResponseModel) => {
         if (!response.success) {
-          console.log("error");
-
           reject(new Error("Failed to join lobby"));
           return;
         }
 
         setLobby(response);
         resolve(response);
-        console.log(response);
       });
     });
   };
 
   useEffect(() => {
     const handleRoomUpdated = (payload: LobbyResponseModel) => {
-      console.log("Room received:", payload);
-
       setLobby((prev) => ({
         ...prev,
         id: payload.id ?? prev.id,
