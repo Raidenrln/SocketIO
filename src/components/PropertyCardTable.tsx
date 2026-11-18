@@ -28,7 +28,10 @@ const PropertyCardTable = ({ card }: PropertyCardTable) => {
   }
 
   return (
-    <div className={`${isMatch ? "z-10 -translate-y-1 scale-105 " : ""}`}>
+    <div
+      className={`${isMatch ? "z-10 -translate-y-1 scale-105 " : ""}`}
+      onClick={() => console.log("ASDSA")}
+    >
       <CardRenderer card={card} />
     </div>
   );

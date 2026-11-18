@@ -25,6 +25,13 @@ const StartGame = () => {
   const opponentProperty = opponents[0];
   const opponentBank = opponentProperty.bank;
 
+  const comparingColorProperties = localPlayerProperties?.find((p) =>
+    p.isWildcard
+      ? p.color === selectedCard?.color && p.secondaryColor === selectedCard?.secondaryColor
+      : p.color === selectedCard?.color,
+  );
+  console.log("asdsadasdasd:", comparingColorProperties);
+
   const handleEndTurn = (roomId: string, playerId: string) => {
     socket.emit("end-turn", { roomId, playerId }, (response: { message: string }) => {
       console.log(response.message);
@@ -110,26 +117,40 @@ const StartGame = () => {
             />
             <p className="text-caption text-white">Draw pile - {room.deck}</p>
           </div>
-
+          {/* Discard pile */}
           <div className="flex flex-col items-center justify-center">
             <div className="h-25 w-16 shrink-0 rounded-lg bg-(--back-card-color) border-3 border-white" />
             <p className="text-caption text-white">Discard pile - 0</p>
           </div>
         </div>
+
         {/* Local player properties and Banks */}
-        <div className="flex w-full items-center">
+        <div
+          className="flex w-full items-center"
+          onClick={
+            comparingColorProperties
+              ? undefined
+              : () => handlePlacingCard(localPlayer!.id, selectedCard!.id, "property")
+          }
+        >
           {/* Local Player Properties */}
-          <div className="flex h-full p-2 flex-1">
-            <div
-              className="flex gap-2 border border-white h-full w-full p-2 rounded-sm justify-center"
-              onClick={() => handlePlacingCard(localPlayer!.id, selectedCard!.id, "property")}
-            >
+          <div className="flex h-full p-2 flex-1 border border-white items-center">
+            <button className="flex gap-2  h-full p-2 rounded-sm ">
               {localPlayerProperties?.map((c) => {
                 if (c.type !== "property") return;
-                return <PropertyCardTable card={c} />;
+
+                return (
+                  <div className="z-10">
+                    <PropertyCardTable card={c} />
+                  </div>
+                );
               })}
-            </div>
+            </button>
+            <button className="bg-(--btn-bg-color) px-3 py-1 h-fit rounded-sm">
+              <span className="text-white text-caption">New set</span>
+            </button>
           </div>
+
           {/* Local Player Bank */}
           <div className="flex h-full w-41.25">
             <div
@@ -150,6 +171,7 @@ const StartGame = () => {
           ))}
         </div>
       </div>
+
       {/* End turn button */}
       <div className="absolute bottom-5 right-5 rounded-button overflow-hidden">
         <button
