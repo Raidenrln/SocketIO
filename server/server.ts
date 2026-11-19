@@ -6,6 +6,7 @@ import { PrivateRoom } from "./types/lobbyModel";
 import { lobbyManager } from "./lobby/lobbyManager";
 import { cardManager } from "./game/cardManager";
 import { turnManager } from "./game/turnManager";
+import { PropertyManager } from "./game/PropertyManager";
 const httpServer = createServer();
 
 export const io = new Server(httpServer, {
@@ -21,6 +22,7 @@ io.on("connection", (socket) => {
   lobbyManager(io, socket);
   cardManager(io, socket);
   turnManager(io, socket);
+  PropertyManager(io, socket);
   // socket.on("start-game", (id, callBack) => {});
 });
 

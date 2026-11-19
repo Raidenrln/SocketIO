@@ -1,3 +1,4 @@
+import { useGame } from "../context/gameContext/useGame";
 import { useSelectedCard } from "../context/selectedCard/useSelectedCard";
 import type { Card } from "../models/cardModel";
 import CardRenderer from "./CardRenderer";
@@ -8,6 +9,7 @@ interface PropertyCardTable {
 
 const PropertyCardTable = ({ card }: PropertyCardTable) => {
   const { selectedCard } = useSelectedCard();
+  const { handlePlacingExistProperty } = useGame();
   if (card.type !== "property") return;
 
   let isMatch = card.isWildcard
@@ -17,7 +19,7 @@ const PropertyCardTable = ({ card }: PropertyCardTable) => {
       card.secondaryColor === selectedCard?.secondaryColor
     : card.color === selectedCard?.color;
 
-  console.log("Selected: ", selectedCard);
+  // console.log("Selected: ", selectedCard);
 
   if (!selectedCard || selectedCard.type !== "property") {
     isMatch = false;
@@ -30,7 +32,10 @@ const PropertyCardTable = ({ card }: PropertyCardTable) => {
   return (
     <div
       className={`${isMatch ? "z-10 -translate-y-1 scale-105 " : ""}`}
-      onClick={() => console.log("ASDSA")}
+      onClick={() => {
+        console.log("ASDSA");
+        handlePlacingExistProperty(card.id, selectedCard!.id, "existProperty");
+      }}
     >
       <CardRenderer card={card} />
     </div>

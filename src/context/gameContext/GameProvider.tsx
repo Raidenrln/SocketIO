@@ -4,11 +4,13 @@ import type { Card } from "../../models/cardModel";
 import { socket } from "../../socket";
 import { useLobby } from "../lobbyContext/useLobby";
 import { useSelectedCard } from "../selectedCard/useSelectedCard";
+import { useUser } from "../userContext/useUser";
 // import { useLobby } from "../lobbyContext/useLobby";
 
 export const GameProvider = ({ children }: { children: React.ReactNode }) => {
   const [hand, setHand] = useState<Card[]>([]);
   const { lobby } = useLobby();
+  const { username } = useUser();
   const { handleSelectedCard } = useSelectedCard();
   // User draw card
 
@@ -43,6 +45,19 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
     handleSelectedCard(null);
   };
 
+  const handlePlacingExistProperty = (cardExistId: string, cardId: string, toWhere: string) => {
+    if (toWhere === "existProperty") {
+      socket.emit(
+        "place-exist-property",
+        { roomId: lobby.id, playerId: username, cardExistId, cardId, toWhere },
+        (response) => {
+          console.log(response);
+          console.log("LobbyId:", lobby.id);
+        },
+      );
+    }
+  };
+
   useEffect(() => {
     const handleHand = (cards: Card[]) => {
       setHand(cards);
@@ -57,7 +72,9 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   return (
-    <GameContext.Provider value={{ hand, handleDrawCard, handlePlacingCard }}>
+    <GameContext.Provider
+      value={{ hand, handleDrawCard, handlePlacingCard, handlePlacingExistProperty }}
+    >
       {children}
     </GameContext.Provider>
   );

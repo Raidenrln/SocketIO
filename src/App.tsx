@@ -9,11 +9,11 @@ function App() {
   return (
     <SelectedCardProvider>
       <LobbyProvider>
-        <GameProvider>
-          <UserProvider>
+        <UserProvider>
+          <GameProvider>
             <RouterProvider router={router} />
-          </UserProvider>
-        </GameProvider>
+          </GameProvider>
+        </UserProvider>
       </LobbyProvider>
     </SelectedCardProvider>
   );

@@ -5,12 +5,13 @@ import { socket } from "../socket";
 import { useNavigate } from "react-router";
 import type { LobbyResponseModel } from "../models/lobbyModel";
 import { useEffect } from "react";
+import { useUser } from "../context/userContext/useUser";
 function Lobby() {
   const navigate = useNavigate();
   const { lobby } = useLobby();
+  const { addUser } = useUser();
   // const { username } = useUser();
   const players = lobby.room.players ?? [];
-
   const handleStartGame = () => {
     socket.emit("start-game", lobby.id, (response: { message: string }) => {
       console.log(response.message);
@@ -20,6 +21,12 @@ function Lobby() {
   useEffect(() => {
     const handleGameStarted = (response: LobbyResponseModel) => {
       navigate(`/game/${response.id}`);
+      const playerId = lobby.room.players.find((p) => p.id === socket.id)?.id;
+      if (playerId) {
+        console.log(playerId);
+        addUser(playerId);
+        // console.log(playerId);
+      }
     };
 
     socket.on("game-started", handleGameStarted);
@@ -27,7 +34,7 @@ function Lobby() {
     return () => {
       socket.off("game-started", handleGameStarted);
     };
-  }, [navigate]);
+  }, [addUser, lobby.room.players, navigate]);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-(--bg-color)">

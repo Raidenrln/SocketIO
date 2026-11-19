@@ -17,7 +17,7 @@ const StartGame = () => {
   const players = room?.players ?? [];
 
   const localPlayer = players.find((p) => p.id === socket.id);
-  const localPlayerProperties = localPlayer?.properties;
+  const localPlayerProperties = localPlayer?.properties.flat();
   const localPlayerBank = localPlayer?.bank;
   const opponents = players.filter((p) => p.id !== socket.id);
 
@@ -27,10 +27,13 @@ const StartGame = () => {
 
   const comparingColorProperties = localPlayerProperties?.find((p) =>
     p.isWildcard
-      ? p.color === selectedCard?.color && p.secondaryColor === selectedCard?.secondaryColor
-      : p.color === selectedCard?.color,
+      ? p.color === selectedCard?.color || p.secondaryColor === selectedCard?.color
+      : p.color === selectedCard?.color ||
+        (selectedCard?.isWildcard &&
+          (selectedCard.color === p.color || selectedCard.secondaryColor === p.color)),
   );
-  console.log("asdsadasdasd:", comparingColorProperties);
+
+  console.log("Is there match?:", comparingColorProperties);
 
   const handleEndTurn = (roomId: string, playerId: string) => {
     socket.emit("end-turn", { roomId, playerId }, (response: { message: string }) => {
@@ -47,7 +50,7 @@ const StartGame = () => {
     // console.log("Hand:", hand);
     console.log("Properties", localPlayerProperties);
     // console.log("Bank:", localPlayerBank);
-    // console.log(selectedCard);
+    console.log(selectedCard);
   }, [
     room,
     opponentHandCount,
@@ -127,10 +130,10 @@ const StartGame = () => {
         {/* Local player properties and Banks */}
         <div
           className="flex w-full items-center"
-          onClick={
+          onClick={() =>
             comparingColorProperties
               ? undefined
-              : () => handlePlacingCard(localPlayer!.id, selectedCard!.id, "property")
+              : handlePlacingCard(localPlayer!.id, selectedCard!.id, "property")
           }
         >
           {/* Local Player Properties */}

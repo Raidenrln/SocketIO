@@ -106,7 +106,7 @@ export const cardManager = (io: Server, socket: Socket) => {
       }
 
       targetPlayer.hand.splice(cardIndex, 1);
-      targetPlayer.properties.push(targetPlayerCard);
+      targetPlayer.properties.push([targetPlayerCard]);
     } else if (toWhere === "bank") {
       if (targetPlayerCard.value === 0) {
         return callBack({
